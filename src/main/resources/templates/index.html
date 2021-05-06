@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Iwt-LuLu Medication Control</title>
+    <link href="webjars/bootstrap/5.0.0-beta3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="webjars/fortawesome__fontawesome-free/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../favicon.ico" />
+</head>
+<body>
+<nav class="navbar navbar-dark" style="background-color: mediumpurple;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../images/logo.png" alt="" width="32" height="32" class="d-inline-block align-text-top">
+            LuLu App
+        </a>
+    </div>
+</nav>
+
+<div class="container" id="app">
+    <div class="input-group mb-3 mt-3">
+        <button class="btn btn-outline-primary" type="button" id="button-create" data-bs-toggle="modal" href="#modalCreateMedication" role="button">Adicionar Medicação</button>
+        <input type="text" class="form-control" placeholder="Buscar medicação..." aria-label="Medicação para buscar" aria-describedby="Botão para buscar medicação">
+        <button class="btn btn-outline-secondary" type="button" id="button-search">Buscar</button>
+    </div>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Nome</th>
+                <th>Estoque</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <div class="btn-group" role="group" aria-label="Ações a serem tomadas para cada medicação">
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalDetailsMedication" role="button"><i class="fas fa-info-circle"></i></button>
+                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalEditMedication" role="button"><i class="fas fa-pen"></i></button>
+                        <button type="button" class="btn btn-outline-primary"><i class="fas fa-shopping-cart"></i></button>
+                    </div>
+                </td>
+                <td><div class="mt-2 mb-2">Nome de exemplo</div></td>
+                <td><div class="mt-2 mb-2">10</div></td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="modal fade" id="modalCreateMedication" aria-hidden="true" aria-labelledby="modalCreateMedication" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Adicionar nova medicação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Formulário
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-bs-dismiss="modal">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalEditMedication" aria-hidden="true" aria-labelledby="modalEditMedication" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Alterar medicação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Formulário
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" data-bs-dismiss="modal">Salvar mudanças</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalDetailsMedication" aria-hidden="true" aria-labelledby="modalDetailsMedication" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detalhes da medicação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Detalhes
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="webjars/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
+<script src="webjars/vue/2.6.12/vue.min.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            modalCreateMedicate: false
+        }
+    })
+</script>
+</body>
+</html>
