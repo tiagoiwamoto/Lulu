@@ -19,7 +19,7 @@ import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tbl_users")
+@Table(name = "tbl_lulu_users")
 @Data
 public class User {
 

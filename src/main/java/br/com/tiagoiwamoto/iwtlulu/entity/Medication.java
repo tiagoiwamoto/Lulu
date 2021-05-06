@@ -8,6 +8,7 @@ package br.com.tiagoiwamoto.iwtlulu.entity;
  * 05/05/2021 | 20:23
  */
 
+import br.com.tiagoiwamoto.iwtlulu.model.MedicationStatusEnum;
 import lombok.Data;
 
 import javax.persistence.Column;
@@ -16,9 +17,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tbl_medications")
+@Table(name = "tbl_lulu_medications")
 @Data
 public class Medication {
 
@@ -36,5 +38,8 @@ public class Medication {
     private String againstIndication;
     @Column(length = 999)
     private String reference;
+    private MedicationStatusEnum status;
+    private Integer stock;
+    private LocalDateTime createdAt;
 
 }
