@@ -46,54 +46,92 @@
             </tr>
         </tbody>
     </table>
-</div>
 
-<div class="modal fade" id="modalCreateMedication" aria-hidden="true" aria-labelledby="modalCreateMedication" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Adicionar nova medicação</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Formulário
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success" data-bs-dismiss="modal">Salvar</button>
+    <div class="modal fade" id="modalCreateMedication" ref="modalCreateMedication" aria-hidden="true" aria-labelledby="modalCreateMedication" tabindex="-1">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adicionar nova medicação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <label for="commercialName" class="form-label">Nome comercial</label>
+                            <input v-model="medication.commercialName" type="text" class="form-control" id="commercialName" placeholder="Nome da medicação">
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="function" class="form-label">Função</label>
+                            <textarea v-model="medication.function" class="form-control" id="function" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="actionMechanism" class="form-label">Mecanismo de ação</label>
+                            <textarea v-model="medication.actionMechanism" class="form-control" id="actionMechanism" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="recommendation" class="form-label">Indicado para</label>
+                            <textarea v-model="medication.recommendation" class="form-control" id="recommendation" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="againstIndication" class="form-label">Contra indicações</label>
+                            <textarea v-model="medication.againstIndication" class="form-control" id="againstIndication" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="reference" class="form-label">Referências</label>
+                            <textarea v-model="medication.reference" class="form-control" id="reference" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="status" class="form-label">Status</label>
+                            <select v-model="medication.status" class="form-select" id="status" aria-label="Selecionar status da medicação">
+                                <option selected>Selecione o status desta medicação</option>
+                                <option value="IN_STOCK">Em estoque</option>
+                                <option value="OUT_STOCK">Sem estoque</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="stock" class="form-label">Estoque</label>
+                            <input v-model="medication.stock" type="number" min="0" class="form-control" id="stock" value="0" placeholder="55">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-warning" data-bs-dismiss="modal">Cancelar</button>
+                    <button v-on:click="performSaveMedication()" class="btn btn-success">Salvar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modalEditMedication" aria-hidden="true" aria-labelledby="modalEditMedication" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Alterar medicação</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Formulário
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-success" data-bs-dismiss="modal">Salvar mudanças</button>
+    <div class="modal fade" id="modalEditMedication" aria-hidden="true" aria-labelledby="modalEditMedication" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Alterar medicação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Formulário
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-success" data-bs-dismiss="modal">Salvar mudanças</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal fade" id="modalDetailsMedication" aria-hidden="true" aria-labelledby="modalDetailsMedication" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Detalhes da medicação</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Detalhes
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+    <div class="modal fade" id="modalDetailsMedication" aria-hidden="true" aria-labelledby="modalDetailsMedication" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Detalhes da medicação</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Detalhes
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
+                </div>
             </div>
         </div>
     </div>
@@ -101,11 +139,41 @@
 
 <script src="webjars/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
 <script src="webjars/vue/2.6.12/vue.min.js"></script>
+<script src="webjars/axios/0.21.1/dist/axios.min.js"></script>
 <script>
     new Vue({
         el: '#app',
         data: {
-            modalCreateMedicate: false
+            medication: {
+                id: null,
+                commercialName: '',
+                function: '',
+                actionMechanism: '',
+                recommendation: '',
+                againstIndication: '',
+                reference: '',
+                status: '',
+                stock: 0,
+            },
+            user: {}
+        },
+        methods: {
+            performSaveMedication: function () {
+                console.log(this.medication);
+                const config = {
+                    headers: {'content-type': 'application/json'}
+                }
+                axios
+                    .post('/v1/api/medications', JSON.stringify(this.medication), config)
+                    .then(response => {
+                        console.log(response);
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
+            }
         }
     })
 </script>
