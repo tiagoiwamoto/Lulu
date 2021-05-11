@@ -20,7 +20,7 @@
 
 <div class="container" id="app">
     <div class="input-group mb-3 mt-3">
-        <button class="btn btn-outline-primary" type="button" id="button-create" data-bs-toggle="modal" href="#modalCreateMedication" role="button">Adicionar Medicação</button>
+        <button v-on:click="setMedicationToCreate" class="btn btn-outline-primary" type="button" id="button-create" data-bs-toggle="modal" href="#modalCreateMedication" role="button">Adicionar Medicação</button>
         <input type="text" class="form-control" placeholder="Buscar medicação..." aria-label="Medicação para buscar" aria-describedby="Botão para buscar medicação">
         <button class="btn btn-outline-secondary" type="button" id="button-search">Buscar</button>
     </div>
@@ -43,7 +43,7 @@
                 <td>
                     <div class="btn-group" role="group" aria-label="Ações a serem tomadas para cada medicação">
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalDetailsMedication" role="button"><i class="fas fa-info-circle"></i></button>
-                        <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalEditMedication" role="button"><i class="fas fa-pen"></i></button>
+                        <button v-on:click="setMedicationToEdit(medication)" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalEditMedication" role="button"><i class="fas fa-pen"></i></button>
                         <button type="button" class="btn btn-outline-primary"><i class="fas fa-shopping-cart"></i></button>
                     </div>
                 </td>
@@ -109,24 +109,61 @@
     </div>
 
     <div class="modal fade" id="modalEditMedication" aria-hidden="true" aria-labelledby="modalEditMedication" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Alterar medicação</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Formulário
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            <label for="commercialName" class="form-label">Nome comercial</label>
+                            <input v-model="medication.commercialName" type="text" class="form-control" placeholder="Nome da medicação">
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="function" class="form-label">Função</label>
+                            <textarea v-model="medication.function" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="actionMechanism" class="form-label">Mecanismo de ação</label>
+                            <textarea v-model="medication.actionMechanism" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="recommendation" class="form-label">Indicado para</label>
+                            <textarea v-model="medication.recommendation" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="againstIndication" class="form-label">Contra indicações</label>
+                            <textarea v-model="medication.againstIndication" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="reference" class="form-label">Referências</label>
+                            <textarea v-model="medication.reference" class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="status" class="form-label">Status</label>
+                            <select v-model="medication.status" class="form-select" aria-label="Selecionar status da medicação">
+                                <option selected>Selecione o status desta medicação</option>
+                                <option value="IN_STOCK">Em estoque</option>
+                                <option value="OUT_STOCK">Sem estoque</option>
+                            </select>
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            <label for="stock" class="form-label">Estoque</label>
+                            <input v-model="medication.stock" type="number" min="0" class="form-control" value="0" placeholder="55">
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-success" data-bs-dismiss="modal">Salvar mudanças</button>
+                    <button v-on:click="performSaveMedication" class="btn btn-success" data-bs-dismiss="modal">Salvar mudanças</button>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="modal fade" id="modalDetailsMedication" aria-hidden="true" aria-labelledby="modalDetailsMedication" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Detalhes da medicação</h5>
@@ -173,7 +210,6 @@
         },
         methods: {
             async performSaveMedication() {
-                console.log(this.medication);
                 const config = {
                     headers: {'content-type': 'application/json'}
                 };
@@ -205,15 +241,15 @@
                 await axios
                     .post('/v1/api/medications', JSON.stringify(this.medication), config)
                     .then(response => {
-                        console.log(response);
+                        this.snackbarMsg = response.data.message;
+                        this.showSnackbar();
                     })
                     .catch(error => {
                         console.log(error)
-                        this.errored = true
                     })
                     .finally(() => {
                         this.loading = false;
-                        this.medications = this.recoverMedications
+                        this.recoverMedications();
                     })
             },
             async recoverMedications() {
@@ -232,6 +268,12 @@
                         this.errored = true
                     })
                     .finally(() => this.loading = false)
+            },
+            setMedicationToCreate(){
+                this.medication = {};
+            },
+            setMedicationToEdit(medication){
+              this.medication = medication;
             },
             showSnackbar() {
                 // Get the snackbar DIV
