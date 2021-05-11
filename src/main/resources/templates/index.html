@@ -42,9 +42,9 @@
             <tr v-for="medication in medications">
                 <td>
                     <div class="btn-group" role="group" aria-label="Ações a serem tomadas para cada medicação">
-                        <button v-on:click="selectMedication(medication)" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalDetailsMedication" role="button"><i class="fas fa-info-circle"></i></button>
-                        <button v-on:click="selectMedication(medication)" type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalEditMedication" role="button"><i class="fas fa-pen"></i></button>
-                        <button type="button" class="btn btn-outline-primary"><i class="fas fa-shopping-cart"></i></button>
+                        <button v-on:click="selectMedication(medication)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" href="#modalDetailsMedication" role="button"><i class="fas fa-info-circle"></i></button>
+                        <button v-on:click="selectMedication(medication)" type="button" class="btn btn-outline-warning" data-bs-toggle="modal" href="#modalEditMedication" role="button"><i class="fas fa-pen"></i></button>
+                        <button v-on:click="selectMedication(medication)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" href="#modalRemoveMedication" role="button"><i class="fas fa-trash"></i></i></button>
                     </div>
                 </td>
                 <td><div class="mt-2 mb-2">{{medication.commercialName}}</div></td>
@@ -245,6 +245,24 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalRemoveMedication" aria-hidden="true" aria-labelledby="modalRemoveMedication" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">AVISO</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-center">Confirma a remoção da medicação {{ medication.commercialName }}?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-danger" v-on:click="removeMedication(medication.id)" data-bs-dismiss="modal">Sim</button>
+                    <button class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="snackbar" style="z-index: 10000">{{ snackbarMsg }}</div>
 </div>
 
@@ -326,12 +344,25 @@
                     .get('/v1/api/medications', config)
                     .then(response => {
                         this.medications = response.data.details;
-                        // this.snackbarMsg = 'Medicações carregadas com sucesso!';
-                        // this.showSnackbar();
                     })
                     .catch(error => {
                         console.log(error)
-                        this.errored = true
+                    })
+                    .finally(() => this.loading = false)
+            },
+            async removeMedication(id) {
+                const config = {
+                    headers: {'content-type': 'application/json', 'x-medication-id': id}
+                }
+                await axios
+                    .delete('/v1/api/medications', config)
+                    .then(response => {
+                        this.snackbarMsg = response.data.message;
+                        this.showSnackbar();
+                        this.recoverMedications();
+                    })
+                    .catch(error => {
+                        console.log(error)
                     })
                     .finally(() => this.loading = false)
             },

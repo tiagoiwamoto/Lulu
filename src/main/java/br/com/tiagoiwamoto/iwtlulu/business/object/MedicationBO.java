@@ -46,4 +46,13 @@ public class MedicationBO {
                 this.medicationService.recoverLastMedications()
         );
     }
+
+    public ApiDTO<String> performRemoveMedications(Long id){
+        this.medicationService.removeMedication(id);
+        return new ApiDTO<>(
+                "0",
+                "Medicação removida com sucesso",
+                ""
+        );
+    }
 }

@@ -46,4 +46,13 @@ public class MedicationService {
             throw new MedicationRecoverException();
         }
     }
+
+    public void removeMedication(Long id){
+        try{
+            this.medicationRepository.deleteById(id);
+        }catch (Exception e){
+            log.error("Failed to remove data from database", e);
+            throw new MedicationRecoverException();
+        }
+    }
 }
