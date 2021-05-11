@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <title>LuLu | Medication Control</title>
@@ -24,6 +24,12 @@
         <input type="text" class="form-control" placeholder="Buscar medicação..." aria-label="Medicação para buscar" aria-describedby="Botão para buscar medicação">
         <button class="btn btn-outline-secondary" type="button" id="button-search">Buscar</button>
     </div>
+
+    <div class="card">
+        <div class="card-body">
+            <button v-on:click="recoverMedications" type="button" class="btn btn-sm btn-outline-info"><i class="fas fa-sync"></i> Recarregar</button>
+        </div>
+    </div>
     <table class="table table-hover">
         <thead>
             <tr>
@@ -33,7 +39,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
+            <tr v-for="medication in medications">
                 <td>
                     <div class="btn-group" role="group" aria-label="Ações a serem tomadas para cada medicação">
                         <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" href="#modalDetailsMedication" role="button"><i class="fas fa-info-circle"></i></button>
@@ -41,8 +47,8 @@
                         <button type="button" class="btn btn-outline-primary"><i class="fas fa-shopping-cart"></i></button>
                     </div>
                 </td>
-                <td><div class="mt-2 mb-2">Nome de exemplo</div></td>
-                <td><div class="mt-2 mb-2">10</div></td>
+                <td><div class="mt-2 mb-2">{{medication.commercialName}}</div></td>
+                <td><div class="mt-2 mb-2">{{medication.stock}}</div></td>
             </tr>
         </tbody>
     </table>
@@ -135,6 +141,8 @@
             </div>
         </div>
     </div>
+
+    <div id="snackbar" style="z-index: 10000">{{ snackbarMsg }}</div>
 </div>
 
 <script src="webjars/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
@@ -144,6 +152,9 @@
     new Vue({
         el: '#app',
         data: {
+            loading: false,
+            snackbarMsg: '',
+            medications: [],
             medication: {
                 id: null,
                 commercialName: '',
@@ -157,13 +168,41 @@
             },
             user: {}
         },
+        mounted: function () {
+            this.recoverMedications();
+        },
         methods: {
-            performSaveMedication: function () {
+            async performSaveMedication() {
                 console.log(this.medication);
                 const config = {
                     headers: {'content-type': 'application/json'}
+                };
+                if(this.medication.commercialName === undefined || this.medication.commercialName.length < 1){
+                    this.snackbarMsg = 'Informe o nome comercial!';
+                    this.showSnackbar();
+                    return;
+                }else if(this.medication.function === undefined || this.medication.function.length < 1){
+                    this.snackbarMsg = 'Informe a função!';
+                    this.showSnackbar();
+                    return;
+                }else if(this.medication.actionMechanism === undefined || this.medication.function.actionMechanism < 1){
+                    this.snackbarMsg = 'Informe o mecanismo de ação!';
+                    this.showSnackbar();
+                    return;
+                }else if(this.medication.recommendation === undefined || this.medication.recommendation.length < 1){
+                    this.snackbarMsg = 'Informe as recomendações!';
+                    this.showSnackbar();
+                    return;
+                }else if(this.medication.againstIndication === undefined || this.medication.function.againstIndication < 1){
+                    this.snackbarMsg = 'Informe a(s) contra indicações!';
+                    this.showSnackbar();
+                    return;
+                }else if(this.medication.reference === undefined || this.medication.function.reference < 1){
+                    this.snackbarMsg = 'Informe as referencias!';
+                    this.showSnackbar();
+                    return;
                 }
-                axios
+                await axios
                     .post('/v1/api/medications', JSON.stringify(this.medication), config)
                     .then(response => {
                         console.log(response);
@@ -172,7 +211,37 @@
                         console.log(error)
                         this.errored = true
                     })
+                    .finally(() => {
+                        this.loading = false;
+                        this.medications = this.recoverMedications
+                    })
+            },
+            async recoverMedications() {
+                const config = {
+                    headers: {'content-type': 'application/json'}
+                }
+                await axios
+                    .get('/v1/api/medications', config)
+                    .then(response => {
+                        this.medications = response.data.details;
+                        // this.snackbarMsg = 'Medicações carregadas com sucesso!';
+                        // this.showSnackbar();
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        this.errored = true
+                    })
                     .finally(() => this.loading = false)
+            },
+            showSnackbar() {
+                // Get the snackbar DIV
+                var x = document.getElementById("snackbar");
+
+                // Add the "show" class to DIV
+                x.className = "show";
+
+                // After 3 seconds, remove the show class from DIV
+                setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
             }
         }
     })
