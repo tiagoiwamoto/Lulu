@@ -10,6 +10,7 @@ package br.com.tiagoiwamoto.iwtlulu.business.service;
 
 import br.com.tiagoiwamoto.iwtlulu.entity.Medication;
 import br.com.tiagoiwamoto.iwtlulu.exception.MedicationCreationException;
+import br.com.tiagoiwamoto.iwtlulu.exception.MedicationDeleteException;
 import br.com.tiagoiwamoto.iwtlulu.exception.MedicationRecoverException;
 import br.com.tiagoiwamoto.iwtlulu.model.MedicationStatusEnum;
 import br.com.tiagoiwamoto.iwtlulu.repository.MedicationRepository;
@@ -64,7 +65,7 @@ public class MedicationService {
             this.medicationRepository.deleteById(id);
         }catch (Exception e){
             log.error("Failed to remove data from database", e);
-            throw new MedicationRecoverException();
+            throw new MedicationDeleteException();
         }
     }
 }
