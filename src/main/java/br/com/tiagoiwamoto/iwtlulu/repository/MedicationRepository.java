@@ -18,4 +18,6 @@ public interface MedicationRepository extends JpaRepository<Medication, Long> {
 
     List<Medication> findTop100ByStatus(MedicationStatusEnum status);
 
+    List<Medication> findAllByCommercialNameLike(String name);
+
 }

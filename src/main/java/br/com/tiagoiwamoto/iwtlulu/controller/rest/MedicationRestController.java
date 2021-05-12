@@ -39,7 +39,14 @@ public class MedicationRestController {
         return ResponseEntity.ok(this.medicationBO.performRecoverMedications());
     }
 
+    @GetMapping(path = "/search")
+    @ResponseBody
+    public ResponseEntity<ApiDTO<List<Medication>>> search(@RequestHeader(name = "x-search-medication") String name){
+        return ResponseEntity.ok(this.medicationBO.performSearchMedications(name));
+    }
+
     @PostMapping
+    @ResponseBody
     public ResponseEntity<ApiDTO<Medication>> create(@RequestBody Medication medication){
         return ResponseEntity.ok(this.medicationBO.performMedicationCreation(medication));
     }

@@ -28,13 +28,17 @@ public class UserBO {
     public ApiDTO<User> performUserCreation(User user){
         user.setCreatedAt(LocalDateTime.now());
         user.setStatus(UserStatusEnum.ACTIVE);
-        return new ApiDTO<>("0", "Operação realizada com sucesso", this.userService.saveUser(user));
+        User userCreated = this.userService.saveUser(user);
+        userCreated.setPassword("******");
+        return new ApiDTO<>("0", "Operação realizada com sucesso", userCreated);
     }
 
     public ApiDTO<User> performLogin(String email, String password){
+        User userFound = this.userService.recoverUserWithEmailAndPassword(email, password);
+        userFound.setPassword("******");
         return new ApiDTO<>("0",
                 "Usuário recuperado com sucesso",
-                this.userService.recoverUserWithEmailAndPassword(email, password));
+                userFound);
     }
 
     public ApiDTO<User> performFindUserByEmail(String email){

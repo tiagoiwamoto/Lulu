@@ -11,6 +11,6 @@ package br.com.tiagoiwamoto.iwtlulu.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.OK, reason = "Não localizamos seu cadastro.")
+@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Não localizamos seu cadastro.")
 public class UserNotFoundException extends RuntimeException{
 }

@@ -11,6 +11,6 @@ package br.com.tiagoiwamoto.iwtlulu.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(value = HttpStatus.BAD_REQUEST, reason = "Não conseguimos concluír seu registro, tente novamente mais tarde")
+@ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "Não conseguimos concluír seu registro, tente novamente mais tarde")
 public class UserCreationException extends RuntimeException{
 }

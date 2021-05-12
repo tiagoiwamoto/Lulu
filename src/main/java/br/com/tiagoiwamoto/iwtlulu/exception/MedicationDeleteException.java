@@ -12,5 +12,5 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(code = HttpStatus.CONFLICT, reason = "Não foi possível concluír sua solicitação, tente novamente mais tarde")
-public class MedicationRecoverException extends RuntimeException{
+public class MedicationDeleteException extends RuntimeException{
 }
