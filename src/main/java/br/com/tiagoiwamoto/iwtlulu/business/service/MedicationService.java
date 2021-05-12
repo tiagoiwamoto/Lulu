@@ -39,6 +39,7 @@ public class MedicationService {
     }
 
     public List<Medication> recoverLastMedications(){
+        log.info("starting method recoverLastMedications()");
         try{
             return this.medicationRepository.findTop100ByStatus(MedicationStatusEnum.IN_STOCK);
         }catch (Exception e){
@@ -47,7 +48,18 @@ public class MedicationService {
         }
     }
 
+    public List<Medication> searchMedications(String name){
+        log.info("starting method searchMedications()");
+        try{
+            return this.medicationRepository.findAllByCommercialNameLike(name);
+        }catch (Exception e){
+            log.error("Failed to recover data from database", e);
+            throw new MedicationRecoverException();
+        }
+    }
+
     public void removeMedication(Long id){
+        log.info("starting method removeMedication()");
         try{
             this.medicationRepository.deleteById(id);
         }catch (Exception e){

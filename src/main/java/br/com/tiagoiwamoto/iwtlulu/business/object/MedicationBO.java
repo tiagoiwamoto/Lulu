@@ -35,7 +35,7 @@ public class MedicationBO {
                 ? MedicationStatusEnum.IN_STOCK
                 : MedicationStatusEnum.OUT_STOCK);
         return new ApiDTO<>("0",
-                "Medicação cadastrada com sucesso",
+                "Medicação foi gravada com sucesso",
                 this.medicationService.saveMedication(medication));
     }
 
@@ -44,6 +44,15 @@ public class MedicationBO {
                 "0",
                 "Medicações recuperadas com sucesso",
                 this.medicationService.recoverLastMedications()
+        );
+    }
+
+    public ApiDTO<List<Medication>> performSearchMedications(String name){
+        name = "%".concat(name).concat("%");
+        return new ApiDTO<>(
+                "0",
+                "Medicações recuperadas com sucesso",
+                this.medicationService.searchMedications(name)
         );
     }
 
