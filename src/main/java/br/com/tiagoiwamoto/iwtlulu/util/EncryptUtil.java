@@ -14,6 +14,11 @@ import java.security.MessageDigest;
 
 public class EncryptUtil {
 
+    /**
+     * This class convert value to MD5
+     * @param value
+     * @return
+     */
     public static String toMd5(String value) {
         try{
             MessageDigest messageDigest = MessageDigest.getInstance("MD5");
