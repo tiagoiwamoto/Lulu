@@ -12,6 +12,7 @@ import br.com.tiagoiwamoto.iwtlulu.business.service.UserService;
 import br.com.tiagoiwamoto.iwtlulu.entity.User;
 import br.com.tiagoiwamoto.iwtlulu.model.ApiDTO;
 import br.com.tiagoiwamoto.iwtlulu.model.UserStatusEnum;
+import br.com.tiagoiwamoto.iwtlulu.util.EncryptUtil;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -28,12 +29,14 @@ public class UserBO {
     public ApiDTO<User> performUserCreation(User user){
         user.setCreatedAt(LocalDateTime.now());
         user.setStatus(UserStatusEnum.ACTIVE);
+        user.setPassword(EncryptUtil.toMd5(user.getPassword()));
         User userCreated = this.userService.saveUser(user);
         userCreated.setPassword("******");
         return new ApiDTO<>("0", "Operação realizada com sucesso", userCreated);
     }
 
     public ApiDTO<User> performLogin(String email, String password){
+        password = EncryptUtil.toMd5(password);
         User userFound = this.userService.recoverUserWithEmailAndPassword(email, password);
         userFound.setPassword("******");
         return new ApiDTO<>("0",
