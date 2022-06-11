@@ -1,10 +1,13 @@
 ### LuLu Application
-Aplicação para controle de medicações.
+Aplicação para catalogar siglas
 
 ### Arquitetura
 Código limpo, com as versões mais atualizadas do spring.
 
 ![Arquitetura](docs/preview.gif)
+
+### Telas / Preview
+![Demo](docs/preview.gif)
 
 ### Build
  >mvn clean package
