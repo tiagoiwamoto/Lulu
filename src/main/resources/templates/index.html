@@ -68,8 +68,8 @@
                                     <p class="card-text" th:text="${'Significado: '+sigla.significadoDaSigla}"></p>
                                 </div>
                                 <div class="card-footer bg-transparent border-success" style="text-align: end">
-                                    <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></button>
-                                    <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button type="button" class="btn btn-primary"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" class="fa-solid fa-circle-info"></i></button>
+                                    <button type="button" class="btn btn-warning"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" class="fa-solid fa-pen-to-square"></i></button>
                                     <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
                                 </div>
                             </div>
@@ -82,6 +82,25 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">CONFIRMA REMOÇÃO DO REGISTRO ?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script th:src="@{/js/popper.min.js}"></script>
 <script th:src="@{/js/bootstrap.min.js}"></script>
 <script th:src="@{/js/all.min.js}"></script>
@@ -90,6 +109,8 @@
     const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
     })
+
+
 </script>
 </body>
 </html>
