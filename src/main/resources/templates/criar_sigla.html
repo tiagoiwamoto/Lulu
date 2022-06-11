@@ -11,7 +11,8 @@
         <a class="navbar-brand" href="#">Kamehouse - LuLu</a>
     </div>
 </nav>
-<div class="container-sm container-md mt-3">
+<div class="container-sm container-md mt-3 bg-body shadow-sm rounded">
+    <br />
     <div class="row">
         <div class="col-sm-12 col-md-2">
             <a href="#" class="btn btn-outline-dark w-100">Home</a>
@@ -19,9 +20,9 @@
             <a href="/siglas" class="btn btn-outline-dark w-100 mt-2">Listar siglas</a>
             <a href="#" class="btn btn-outline-dark w-100 mt-2">Sobre</a>
             <a href="#" class="btn btn-outline-dark w-100 mt-2">Sair</a>
+            <div style="padding-bottom: 1em;"></div>
         </div>
         <div class="col-sm-12 col-md-10">
-            <a href="/siglas">Voltar</a>
             <form th:action="@{/siglas/criar}" method="post">
 
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
@@ -53,6 +54,7 @@
                     <button type="submit" class="btn btn-lg btn-outline-primary">Gravar nova sigla</button>
                 </div>
             </form>
+            <br />
         </div>
     </div>
 </div>

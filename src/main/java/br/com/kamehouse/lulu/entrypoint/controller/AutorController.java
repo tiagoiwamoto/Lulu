@@ -26,7 +26,7 @@ public class AutorController {
     @PostMapping(path = "/autor/novo")
     public String salvarAutor(AutorDto autorDto){
         this.autorCriacaoUsecase.criacaoDeAutor(autorDto);
-        return "/siglas";
+        return "redirect:/login";
     }
 
 }
