@@ -1,28 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Kamehouse - LuLu</title>
-    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/all.min.css}" />
+<head th:replace="~{fragments/_base :: head}">
 </head>
 <body>
-<nav class="navbar shadow-sm navbar-dark" style="background-color: #6200ff;">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Kamehouse - LuLu</a>
-    </div>
-</nav>
+<nav th:replace="~{fragments/_base :: navbar}"></nav>
 <div class="container-sm container-md mt-3  shadow-sm rounded">
     <br />
     <div class="row">
-        <div class="col-sm-12 col-md-2">
-            <a href="#" class="btn btn-outline-dark w-100">Home</a>
-            <a href="/siglas/criar" class="btn btn-outline-dark w-100 mt-2">Criar sigla</a>
-            <a href="/siglas" class="btn btn-outline-dark w-100 mt-2">Listar siglas</a>
-            <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-outline-dark w-100 mt-2">Sobre</a>
-            <a th:href="@{/logout}" class="btn btn-outline-dark w-100 mt-2">Sair</a>
-            <div style="padding-bottom: 1em;"></div>
-        </div>
+        <div class="col-sm-12 col-md-2" th:replace="~{fragments/_base :: menu}"></div>
         <div class="col-sm-12 col-md-10">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -47,8 +32,8 @@
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
                                         <button data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" type="button" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></button>
-                                        <button data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" type="button" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" type="button" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                                        <a th:href="@{|/siglas/editar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" type="button" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <a th:href="@{|/siglas/deletar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                                     </div>
                                 </td>
                                 <td th:text="${sigla.id}"></td>
@@ -72,7 +57,7 @@
                                 <div class="card-footer bg-transparent border-success" style="text-align: end">
                                     <button type="button" class="btn btn-primary"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" class="fa-solid fa-circle-info"></i></button>
                                     <button type="button" class="btn btn-warning"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" class="fa-solid fa-pen-to-square"></i></button>
-                                    <button type="button" data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></button>
+                                    <a th:href="@{|/siglas/deletar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -106,16 +91,6 @@
     </div>
 </div>
 
-<script th:src="@{/js/popper.min.js}"></script>
-<script th:src="@{/js/bootstrap.min.js}"></script>
-<script th:src="@{/js/all.min.js}"></script>
-<script>
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl)
-    })
-
-
-</script>
+<div th:replace="~{fragments/_base :: scripts}"></div>
 </body>
 </html>

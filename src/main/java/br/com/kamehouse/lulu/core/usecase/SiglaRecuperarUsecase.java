@@ -8,6 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,5 +25,12 @@ public class SiglaRecuperarUsecase {
             return siglaDto;
         }).collect(Collectors.toList());
         return siglaDtos;
+    }
+
+    public SiglaDto recuperarSiglaPorId(Long id){
+        Optional<Sigla> optionalSigla = this.siglaRepository.findById(id);
+        SiglaDto siglaDto = new SiglaDto();
+        BeanUtils.copyProperties(optionalSigla.orElseThrow(), siglaDto);
+        return siglaDto;
     }
 }
