@@ -31,7 +31,7 @@
                             <tbody th:each="sigla : ${siglas}">
                                 <td>
                                     <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
-                                        <button data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" type="button" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></button>
+                                        <a th:href="@{|/siglas/info/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
                                         <a th:href="@{|/siglas/editar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" type="button" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                         <a th:href="@{|/siglas/deletar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                                     </div>
@@ -49,14 +49,14 @@
                         <div class="col-sm-12 col-md-4" th:each="sigla : ${siglas}">
                             <div class="card border-dark mb-3" style="min-height: 15rem;">
                                 <div class="card-header" th:text="${'Sigla: '+sigla.sigla}"></div>
-                                <div class="card-body">
+                                <div class="card-body" style="min-height: 200px; max-height: 200px; overflow: auto">
                                     <div style="text-align: end"><span class="badge text-bg-warning" th:text="${'Tipo: '+sigla.tipo}"></span></div>
                                     <hr />
                                     <p class="card-text" th:text="${'Significado: '+sigla.significadoDaSigla}"></p>
                                 </div>
                                 <div class="card-footer bg-transparent border-success" style="text-align: end">
-                                    <button type="button" class="btn btn-primary"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" class="fa-solid fa-circle-info"></i></button>
-                                    <a th:href="@{|/siglas/editar/${sigla.id}|}" class="btn btn-warning"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" class="fa-solid fa-pen-to-square"></i></a>
+                                    <a th:href="@{|/siglas/info/${sigla.id}|}" class="btn btn-primary"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" class="fa-solid fa-circle-info"></i></a>
+                                    <a th:href="@{|/siglas/editar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
                                     <a th:href="@{|/siglas/deletar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
                                 </div>
                             </div>
@@ -70,26 +70,7 @@
     <br />
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Sobre a aplicação</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img th:src="@{/imgs/robot-magic.gif}" height="200"/>
-                <p>Kamehouse LuLu - Gerenciamento de siglas</p>
-                <p>Versão: 2.0.0</p>
-                <p>Atualizada em: 11/06/2022</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div th:replace="~{fragments/_base :: modalInfo}"></div>
 
 <div th:replace="~{fragments/_base :: scripts}"></div>
 </body>

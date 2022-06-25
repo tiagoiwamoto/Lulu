@@ -12,5 +12,6 @@ public class AutorDto {
     private String email;
     private String senha;
     private LocalDateTime timestamp;
+    private Integer total;
 
 }

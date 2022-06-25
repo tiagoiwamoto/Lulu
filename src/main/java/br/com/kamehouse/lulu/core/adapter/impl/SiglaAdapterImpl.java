@@ -1,8 +1,10 @@
 package br.com.kamehouse.lulu.core.adapter.impl;
 
 import br.com.kamehouse.lulu.core.adapter.SiglaAdapter;
+import br.com.kamehouse.lulu.core.domain.Autor;
 import br.com.kamehouse.lulu.core.domain.Sigla;
 import br.com.kamehouse.lulu.core.repository.SiglaRepository;
+import br.com.kamehouse.lulu.core.repository.SiglasPorAutor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -46,5 +48,9 @@ public class SiglaAdapterImpl implements SiglaAdapter {
 
     public Sigla getPrimeiraSigla(){
         return this.siglaRepository.primeiraSiglaCadastrada().orElse(null);
+    }
+
+    public SiglasPorAutor recuperarAutorQueMaisCriouSiglas(){
+        return this.siglaRepository.findAutorQueMaisCriouSiglas();
     }
 }

@@ -9,10 +9,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping(path = "/siglas")
@@ -31,14 +34,18 @@ public class SiglaController {
 
     @GetMapping(path = "/criar")
     public String paginaCriarSigla(ModelMap modelMap){
-        modelMap.addAttribute("sigla", new SiglaDto());
+        modelMap.addAttribute("siglaDto", new SiglaDto());
         modelMap.addAttribute("botaoGravarValue", "Gravar nova sigla");
         return "formulario_sigla";
     }
 
-    @PostMapping(path = "/criar")
-    public String criarSigla(SiglaDto siglaDto, Authentication authentication, ModelMap modelMap){
-        System.out.println(siglaDto.toString());
+    @PostMapping(path = {"/criar", "/editar"})
+    public String criarSigla(@Valid SiglaDto siglaDto, BindingResult bindingResult, Authentication authentication, ModelMap modelMap){
+        if(bindingResult.hasErrors()){
+            modelMap.addAttribute("siglaDto", siglaDto);
+            modelMap.addAttribute("botaoGravarValue", "Gravar nova sigla");
+            return "formulario_sigla";
+        }
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         siglaDto.setAutor(userDetails.getAutor());
         this.siglaCriacaoUsecase.criacaoDeSigla(siglaDto);
@@ -47,14 +54,14 @@ public class SiglaController {
 
     @GetMapping(path = "/editar/{id}")
     public String paginaEditarSigla(@PathVariable(name = "id") Long id, ModelMap modelMap){
-        modelMap.addAttribute("sigla", this.siglaRecuperarUsecase.recuperarSiglaPorId(id));
+        modelMap.addAttribute("siglaDto", this.siglaRecuperarUsecase.recuperarSiglaPorId(id));
         modelMap.addAttribute("botaoGravarValue", "Atualizar sigla");
         return "formulario_sigla";
     }
 
     @GetMapping(path = "/deletar/{id}")
     public String paginaDeletarSigla(@PathVariable(name = "id") Long id, ModelMap modelMap){
-        modelMap.addAttribute("sigla", this.siglaRecuperarUsecase.recuperarSiglaPorId(id));
+        modelMap.addAttribute("siglaDto", this.siglaRecuperarUsecase.recuperarSiglaPorId(id));
         return "deletar_sigla";
     }
 
@@ -62,6 +69,12 @@ public class SiglaController {
     public String deletarSigla(@PathVariable(name = "id") Long id, ModelMap modelMap){
         this.siglaRemoverUsecase.deletarSigla(id);
         return "redirect:/siglas";
+    }
+
+    @GetMapping(path = "/info/{id}")
+    public String paginaInfoSigla(@PathVariable(name = "id") Long id, ModelMap modelMap){
+        modelMap.addAttribute("siglaDto", this.siglaRecuperarUsecase.recuperarSiglaPorId(id));
+        return "sigla_info";
     }
 
 }

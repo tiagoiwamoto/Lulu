@@ -12,19 +12,25 @@
             <form th:action="@{/siglas/criar}" method="post">
 
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <input type="hidden" name="id" id="id" th:value="${sigla.id}" />
+                <input type="hidden" name="id" id="id" th:value="${siglaDto.id}" />
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" name="sigla" id="sigla" th:value="${sigla.sigla}" placeholder="Sigla">
+                    <input type="text" class="form-control" name="sigla" id="sigla" th:field="${siglaDto.sigla}" placeholder="Sigla">
                     <label for="sigla">Sigla</label>
+                    <ul th:if="${#fields.hasErrors('siglaDto.sigla')}">
+                        <li class="text-danger" th:each="erro : ${#fields.errors('siglaDto.sigla')}" th:text="${erro}"></li>
+                    </ul>
                 </div>
 
                 <div class="form-floating">
-                    <textarea class="form-control" placeholder="Significado da sigla" th:text="${sigla.significadoDaSigla}" name="significadoDaSigla" id="significadoDaSigla"></textarea>
+                    <textarea class="form-control" placeholder="Significado da sigla" rows="5" style="height:100%;" th:text="${siglaDto.significadoDaSigla}" name="significadoDaSigla" id="significadoDaSigla"></textarea>
                     <label for="significadoDaSigla">Significado da sigla</label>
+                    <ul th:if="${#fields.hasErrors('siglaDto.significadoDaSigla')}">
+                        <li class="text-danger" th:each="erro : ${#fields.errors('siglaDto.significadoDaSigla')}" th:text="${erro}"></li>
+                    </ul>
                 </div>
 
                 <div class="form-floating mt-3">
-                    <select th:field="*{sigla.tipo}" name="tipo" id="tipo" class="form-select" aria-label="Tipo da sigla">
+                    <select th:field="*{siglaDto.tipo}" name="tipo" id="tipo" class="form-select" aria-label="Tipo da sigla">
                         <option value="N/A" disabled>Selecione um tipo</option>
                         <option value="DOCUMENTO">Documento</option>
                         <option value="SISTEMA">Sistema</option>
@@ -45,7 +51,7 @@
         </div>
     </div>
 </div>
-
+<div th:replace="~{fragments/_base :: modalInfo}"></div>
 <div th:replace="~{fragments/_base :: scripts}"></div>
 </body>
 </html>

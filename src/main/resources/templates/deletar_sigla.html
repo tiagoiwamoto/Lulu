@@ -17,7 +17,7 @@
                 <div class="alert alert-warning d-flex align-items-center" role="alert">
                     <i class="fa-solid fa-triangle-exclamation fa-2x" style="margin-right: 1em"></i>
                     <div>
-                        Você confirma a remoção da sigla <strong>[[${sigla.sigla}]]</strong> de nossa base de dados ?
+                        Você confirma a remoção da sigla <strong>[[${siglaDto.sigla}]]</strong> de nossa base de dados ?
                     </div>
                 </div>
 
@@ -30,7 +30,7 @@
         </div>
     </div>
 </div>
-
+<div th:replace="~{fragments/_base :: modalInfo}"></div>
 <div th:replace="~{fragments/_base :: scripts}"></div>
 </body>
 </html>

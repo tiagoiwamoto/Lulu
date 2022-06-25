@@ -10,9 +10,9 @@
         <div class="col-sm-12 col-md-2" th:replace="~{fragments/_base :: menu}"></div>
         <div class="col-sm-12 col-md-10">
             <div class="row">
-                <div class="col-sm-12 col-md-4">
-                    <div class="card border-primary mb-3">
-                        <div class="card-body text-primary">
+                <div class="col-sm-12 col-md-6">
+                    <div class="card border-success mb-3">
+                        <div class="card-body text-dark">
                             <h5 class="card-title">Total de siglas</h5>
                             <div class="align-content-end" style="text-align: end; margin-right: 1em;">
                                 <p style="font-size: 2em;" th:text="${valores.totalSiglas}"></p>
@@ -20,9 +20,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-12 col-md-4">
-                    <div class="card border-primary mb-3">
-                        <div class="card-body text-primary">
+                <div class="col-sm-12 col-md-6">
+                    <div class="card border-success mb-3">
+                        <div class="card-body text-dark">
                             <h5 class="card-title">Total de autores</h5>
                             <div class="align-content-end" style="text-align: end; margin-right: 1em;">
                                 <p style="font-size: 2em;" th:text="${valores.totalAutores}"></p>
@@ -31,33 +31,34 @@
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <div class="card border-primary mb-3">
-                        <div class="card-body text-primary">
-                            <h5 class="card-title">Tamanho de nossa base de dados</h5>
+                    <div class="card border-warning mb-3">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Autor que mais contribuiu</h5>
                             <div class="align-content-end" style="text-align: end; margin-right: 1em;">
-                                <p style="font-size: 2em;" th:text="${valores.sizeDatabase}"></p>
+                                <p style="font-size: 2em;" th:text="${valores.rankingAutor.nome}"></p>
+                                <span class="badge text-bg-secondary" th:text="'Total de siglas: ' + ${valores.rankingAutor.total}"></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <div class="card border-primary mb-3">
-                        <div class="card-body text-primary">
+                    <div class="card border-warning mb-3">
+                        <div class="card-body text-dark">
                             <h5 class="card-title">Última sigla</h5>
                             <div class="align-content-end" style="text-align: end; margin-right: 1em;">
                                 <p style="font-size: 2em;" th:text="${valores.ultimaSiglaCadastrada.sigla}"></p>
-                                <i><p style="font-size: 1em;" th:text="${#temporals.format(valores.ultimaSiglaCadastrada.timestamp, 'dd/MM/yyyy')}"></p></i>
+                                <span class="badge text-bg-secondary" th:text="${#temporals.format(valores.ultimaSiglaCadastrada.timestamp, 'dd/MM/yyyy')}"></span>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-12 col-md-4">
-                    <div class="card border-primary mb-3">
-                        <div class="card-body text-primary">
+                    <div class="card border-warning mb-3">
+                        <div class="card-body text-dark">
                             <h5 class="card-title">Primeira sigla</h5>
                             <div class="align-content-end" style="text-align: end; margin-right: 1em;">
                                 <p style="font-size: 2em;" th:text="${valores.primeiraSiglaCadastrada.sigla}"></p>
-                                <i><p style="font-size: 1em;" th:text="${#temporals.format(valores.primeiraSiglaCadastrada.timestamp, 'dd/MM/yyyy')}"></p></i>
+                                <span class="badge text-bg-secondary" th:text="${#temporals.format(valores.primeiraSiglaCadastrada.timestamp, 'dd/MM/yyyy')}"></span>
                             </div>
                         </div>
                     </div>
@@ -67,28 +68,7 @@
     </div>
     <br />
 </div>
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticBackdropLabel">Sobre a aplicação</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body text-center">
-                <img th:src="@{/imgs/robot-magic.gif}" height="200"/>
-                <p>Kamehouse LuLu - Gerenciamento de siglas</p>
-                <p>Versão: 2.0.0</p>
-                <p>Atualizada em: 11/06/2022</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
+<div th:replace="~{fragments/_base :: modalInfo}"></div>
 <div th:replace="~{fragments/_base :: scripts}"></div>
 </body>
 </html>
