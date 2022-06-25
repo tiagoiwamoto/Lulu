@@ -35,4 +35,16 @@ public class SiglaAdapterImpl implements SiglaAdapter {
     public List<Sigla> recuperarSiglaPorSigla(String sigla) {
         return null;
     }
+
+    public Long getTotalDeSiglas(){
+        return this.siglaRepository.count();
+    }
+
+    public Sigla getUltimaSigla(){
+        return this.siglaRepository.ultimaSiglaCadastrada().orElse(null);
+    }
+
+    public Sigla getPrimeiraSigla(){
+        return this.siglaRepository.primeiraSiglaCadastrada().orElse(null);
+    }
 }

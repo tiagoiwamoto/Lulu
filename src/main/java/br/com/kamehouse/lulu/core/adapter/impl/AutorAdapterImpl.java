@@ -19,4 +19,8 @@ public class AutorAdapterImpl implements AutorAdapter {
         return this.autorRepository.save(autor);
     }
 
+    public Long getCountOfAutor(){
+        return this.autorRepository.count();
+    }
+
 }

@@ -12,7 +12,7 @@
             <form th:action="@{/siglas/criar}" method="post">
 
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-                <input type="text" name="id" id="id" th:value="${sigla.id}" />
+                <input type="hidden" name="id" id="id" th:value="${sigla.id}" />
                 <div class="form-floating mb-3">
                     <input type="text" class="form-control" name="sigla" id="sigla" th:value="${sigla.sigla}" placeholder="Sigla">
                     <label for="sigla">Sigla</label>

@@ -26,7 +26,7 @@ public class SiglaController {
     @GetMapping
     public String index(ModelMap modelMap){
         modelMap.addAttribute("siglas", this.siglaRecuperarUsecase.recuperarSiglas());
-        return "index";
+        return "siglas";
     }
 
     @GetMapping(path = "/criar")
