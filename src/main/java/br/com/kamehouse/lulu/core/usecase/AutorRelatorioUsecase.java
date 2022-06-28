@@ -16,3 +16,4 @@ public class AutorRelatorioUsecase {
         return this.autorAdapterImpl.getCountOfAutor();
     }
 }
+
