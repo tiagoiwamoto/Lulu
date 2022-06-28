@@ -9,6 +9,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class SiglaRelatorioUsecase {
@@ -22,19 +24,31 @@ public class SiglaRelatorioUsecase {
 
     @Cacheable("ultimaSiglaCadastrada")
     public Sigla ultimaSiglaCadastrada(){
-        return this.siglaAdapter.getUltimaSigla();
+        Sigla sigla = this.siglaAdapter.getUltimaSigla();
+        if(Objects.isNull(sigla)){
+            sigla = new Sigla();
+        }
+        return sigla;
     }
 
     @Cacheable("primeiraSiglaCadastrada")
     public Sigla primeiraSiglaCadastrada(){
-        return this.siglaAdapter.getPrimeiraSigla();
+        Sigla sigla = this.siglaAdapter.getPrimeiraSigla();
+        if(Objects.isNull(sigla)){
+            sigla = new Sigla();
+        }
+        return sigla;
     }
 
     @Cacheable("autorQueMaisCadastrouSiglas")
     public AutorDto autorQueMaisCadastrouSiglas(){
         SiglasPorAutor siglasPorAutor = this.siglaAdapter.recuperarAutorQueMaisCriouSiglas();
         AutorDto autorDto = new AutorDto();
-        BeanUtils.copyProperties(siglasPorAutor, autorDto);
+        if(!Objects.isNull(siglasPorAutor)){
+            BeanUtils.copyProperties(siglasPorAutor, autorDto);
+        }else {
+            autorDto.setTotal(0);
+        }
         return autorDto;
     }
 }

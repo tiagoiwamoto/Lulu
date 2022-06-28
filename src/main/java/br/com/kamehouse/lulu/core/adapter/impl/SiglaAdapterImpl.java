@@ -51,6 +51,6 @@ public class SiglaAdapterImpl implements SiglaAdapter {
     }
 
     public SiglasPorAutor recuperarAutorQueMaisCriouSiglas(){
-        return this.siglaRepository.findAutorQueMaisCriouSiglas();
+        return this.siglaRepository.findAutorQueMaisCriouSiglas().orElse(null);
     }
 }

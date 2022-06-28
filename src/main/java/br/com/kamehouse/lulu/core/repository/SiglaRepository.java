@@ -24,6 +24,6 @@ public interface SiglaRepository extends JpaRepository<Sigla, Long> {
             "on autor.id = sigla.tbl_lulu_autor_id \n" +
             "group by autor.id, sigla.tbl_lulu_autor_id\n" +
             "order by total desc limit 1", nativeQuery = true)
-    SiglasPorAutor findAutorQueMaisCriouSiglas();
+    Optional<SiglasPorAutor> findAutorQueMaisCriouSiglas();
 
 }
