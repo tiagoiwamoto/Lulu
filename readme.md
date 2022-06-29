@@ -4,10 +4,12 @@ Aplicação para catalogar siglas
 ### Arquitetura
 Código limpo, com as versões mais atualizadas do spring.
 
-![Arquitetura](docs/preview.gif)
-
 ### Telas / Preview
-![Demo](docs/preview.gif)
+![img.png](docs/preview1.png)
+![img.png](docs/preview2.png)
+![img.png](docs/preview3.png)
+![img.png](docs/preview4.png)
+![img.png](docs/preview5.png)
 
 ### Build
  >mvn clean package
@@ -20,7 +22,12 @@ Rode a aplicação em sua IDE de preferencia.
 ### Tecnologias
  - Java 18
  - SpringMVC
+ - SpringData
+ - Spring Security
+ - Spring Cache
  - Thymeleaf
+ - Lombok
+ - Junit 5
  - Postgres
  - Bootstrap 5
  - FontAwesome 6

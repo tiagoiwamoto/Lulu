@@ -80,12 +80,6 @@
             <artifactId>reactor-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.mapstruct</groupId>
-            <artifactId>mapstruct</artifactId>
-            <version>1.4.2.Final</version>
-            <scope>compile</scope>
-        </dependency>
 
         <dependency>
             <groupId>org.junit.vintage</groupId>
