@@ -1,4 +1,4 @@
-### LuLu Application
+### LuLu Application v2.0
 Aplicação para catalogar siglas
 
 ### Arquitetura
