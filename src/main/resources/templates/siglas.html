@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/_base :: head}">
+</head>
+<body>
+<nav th:replace="~{fragments/_base :: navbar}"></nav>
+<div class="container-sm container-md mt-3  shadow-sm rounded">
+    <br />
+    <div class="row">
+        <div class="col-sm-12 col-md-2" th:replace="~{fragments/_base :: menu}"></div>
+        <div class="col-sm-12 col-md-10">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Tabela</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Card</button>
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                            <th></th>
+                            <th>ID</th>
+                            <th>SIGLA</th>
+                            <th>TIPO</th>
+                            <th>SIGNIFICADO</th>
+                            </thead>
+                            <tbody th:each="sigla : ${siglas}">
+                                <td>
+                                    <div class="btn-group btn-group-sm" role="group" aria-label="Basic mixed styles example">
+                                        <a th:href="@{|/siglas/info/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" class="btn btn-primary"><i class="fa-solid fa-circle-info"></i></a>
+                                        <a th:href="@{|/siglas/editar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" type="button" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                        <a th:href="@{|/siglas/deletar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                    </div>
+                                </td>
+                                <td th:text="${sigla.id}"></td>
+                                <td th:text="${sigla.sigla}"></td>
+                                <td th:text="${sigla.tipo}"></td>
+                                <td th:text="${sigla.significadoDaSigla}"></td>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                    <div class="row mt-3">
+                        <div class="col-sm-12 col-md-4" th:each="sigla : ${siglas}">
+                            <div class="card border-dark mb-3" style="min-height: 15rem;">
+                                <div class="card-header" th:text="${'Sigla: '+sigla.sigla}"></div>
+                                <div class="card-body" style="min-height: 200px; max-height: 200px; overflow: auto">
+                                    <div style="text-align: end"><span class="badge text-bg-warning" th:text="${'Tipo: '+sigla.tipo}"></span></div>
+                                    <hr />
+                                    <p class="card-text" th:text="${'Significado: '+sigla.significadoDaSigla}"></p>
+                                </div>
+                                <div class="card-footer bg-transparent border-success" style="text-align: end">
+                                    <a th:href="@{|/siglas/info/${sigla.id}|}" class="btn btn-primary"><i data-bs-toggle="tooltip" data-bs-placement="top" title="Detalhes do registro" class="fa-solid fa-circle-info"></i></a>
+                                    <a th:href="@{|/siglas/editar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Editar este registro" class="btn btn-warning"><i class="fa-solid fa-pen-to-square"></i></a>
+                                    <a th:href="@{|/siglas/deletar/${sigla.id}|}" data-bs-toggle="tooltip" data-bs-placement="top" title="Remover este registro" class="btn btn-danger"><i class="fa-solid fa-trash-can"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <br />
+</div>
+
+<div th:replace="~{fragments/_base :: modalInfo}"></div>
+
+<div th:replace="~{fragments/_base :: scripts}"></div>
+</body>
+</html>

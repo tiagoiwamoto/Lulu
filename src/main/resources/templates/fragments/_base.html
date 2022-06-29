@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:fragment="head">
+    <meta charset="UTF-8">
+    <title>Kamehouse - LuLu</title>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/all.min.css}" />
+</head>
+<body>
+<nav th:fragment="navbar" class="navbar shadow-sm navbar-dark" style="background-color: #6200ff;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Kamehouse - LuLu</a>
+    </div>
+</nav>
+
+<div class="col-sm-12 col-md-2" th:fragment="menu">
+    <a href="/" class="btn btn-outline-dark w-100">Home</a>
+    <a href="/siglas/criar" class="btn btn-outline-dark w-100 mt-2">Criar sigla</a>
+    <a href="/siglas" class="btn btn-outline-dark w-100 mt-2">Listar siglas</a>
+    <a href="#" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-outline-dark w-100 mt-2">Sobre</a>
+    <a th:href="@{/logout}" class="btn btn-outline-dark w-100 mt-2">Sair</a>
+    <div style="padding-bottom: 1em;"></div>
+</div>
+
+<!-- Modal -->
+<div th:fragment="modalInfo" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Sobre a aplicação</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img th:src="@{/imgs/robot-magic.gif}" height="200"/>
+                <p>Kamehouse LuLu - Gerenciamento de siglas</p>
+                <p>Versão: 2.0.0</p>
+                <p>Atualizada em: 11/06/2022</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div th:fragment="scripts">
+    <script th:src="@{/js/popper.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/all.min.js}"></script>
+    <script>
+        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        const tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+            return new bootstrap.Tooltip(tooltipTriggerEl)
+        })
+    </script>
+</div>
+</body>
+</html>
