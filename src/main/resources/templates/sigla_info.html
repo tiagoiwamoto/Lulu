@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{fragments/_base :: head}">
+</head>
+<body>
+<nav th:replace="~{fragments/_base :: navbar}"></nav>
+<div class="container-sm container-md mt-3  shadow-sm rounded">
+    <br />
+    <div class="row">
+        <div class="col-sm-12 col-md-2" th:replace="~{fragments/_base :: menu}"></div>
+        <div class="col-sm-12 col-md-10">
+            <div class="row">
+                <div class="alert alert-success" role="alert">
+                    <h4 class="alert-heading" th:text="'Sigla: ' + ${siglaDto.sigla}"></h4>
+                    <p th:text="'Significado: ' + ${siglaDto.significadoDaSigla}"></p>
+                    <span class="badge text-bg-warning" th:text="'Tipo: ' + ${siglaDto.tipo}"></span>
+                    <hr>
+                    <p class="mb-0" th:text="'Autor: ' + ${siglaDto.autor.nome}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+</div>
+<div th:replace="~{fragments/_base :: modalInfo}"></div>
+<div th:replace="~{fragments/_base :: scripts}"></div>
+</body>
+</html>

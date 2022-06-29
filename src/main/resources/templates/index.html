@@ -1,353 +1,74 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>LuLu | Medication Control</title>
-    <link href="webjars/bootstrap/5.0.0-beta3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="webjars/fortawesome__fontawesome-free/5.15.3/css/all.min.css" rel="stylesheet">
-    <link href="../css/lulu.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="../favicon.ico" />
+<html lang="en">
+<head th:replace="~{fragments/_base :: head}">
 </head>
 <body>
-<nav class="navbar navbar-dark" style="background-color: mediumpurple;">
-    <div class="container-fluid">
-        <a class="navbar-brand app-logo" href="#">
-            <img src="../images/logo.png" alt="" width="32" height="32" class="d-inline-block align-text-top">
-            LuLu App
-        </a>
-    </div>
-</nav>
-
-<div class="container" id="app">
-
-    <div v-if="!isAuthenticated" class="mt-3 w-100">
-        <div class="text-center">
-            <p class="h4">Login</p>
-        </div>
-        <div class="card mx-auto" style="width: 18rem;">
-            <div class="card-body">
-                <div class="form-floating mb-3">
-                    <input v-model="user.email" type="email" class="form-control" id="floatingInput" placeholder="nome@email.com">
-                    <label for="floatingInput">Email</label>
-                </div>
-                <div class="form-floating">
-                    <input v-model="user.password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Senha</label>
-                </div>
-
-                <div class="text-end mt-2">
-                    <button v-on:click="performLogin" type="button" class="btn btn-outline-primary">Entrar</button>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" href="#modalCreateUser" role="button">Cadastrar</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modalCreateUser" aria-hidden="true" aria-labelledby="modalCreateUser" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Criação de novo usuário</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-floating mb-3">
-                            <input v-model="user.name" type="text" class="form-control" id="newUserName" placeholder="Seu Nome">
-                            <label for="floatingInput">Nome</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input v-model="user.email" type="email" class="form-control" id="newUserEmail" placeholder="nome@email.com">
-                            <label for="floatingInput">Email</label>
-                        </div>
-                        <div class="form-floating mb-3">
-                            <input v-model="user.password" type="password" class="form-control" id="newUserPassword" placeholder="******">
-                            <label for="floatingInput">Senha</label>
+<nav th:replace="~{fragments/_base :: navbar}"></nav>
+<div class="container-sm container-md mt-3  shadow-sm rounded">
+    <br />
+    <div class="row">
+        <div class="col-sm-12 col-md-2" th:replace="~{fragments/_base :: menu}"></div>
+        <div class="col-sm-12 col-md-10">
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="card border-success mb-3">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Total de siglas</h5>
+                            <div class="align-content-end" style="text-align: end; margin-right: 1em;">
+                                <p style="font-size: 2em;" th:text="${valores.totalSiglas}"></p>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button v-if="!loadingUserCreation" v-on:click="performSaveUser" class="btn btn-primary">Cadastrar</button>
-                        <button v-if="loadingUserCreation" class="btn btn-primary" type="button" disabled>
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            Registrando...
-                        </button>
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="card border-success mb-3">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Total de autores</h5>
+                            <div class="align-content-end" style="text-align: end; margin-right: 1em;">
+                                <p style="font-size: 2em;" th:text="${valores.totalAutores}"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="card border-warning mb-3">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Autor que mais contribuiu</h5>
+                            <div class="align-content-end" style="text-align: end; margin-right: 1em;">
+                                <p style="font-size: 2em;" th:text="${valores.rankingAutor.nome}"></p>
+                                <span class="badge text-bg-secondary" th:text="'Total de siglas: ' + ${valores.rankingAutor.total}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="card border-warning mb-3">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Última sigla</h5>
+                            <div class="align-content-end" style="text-align: end; margin-right: 1em;">
+                                <p style="font-size: 2em;" th:text="${valores.ultimaSiglaCadastrada.sigla}"></p>
+                                <span class="badge text-bg-secondary" th:text="${#temporals.format(valores.ultimaSiglaCadastrada.timestamp, 'dd/MM/yyyy')}"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4">
+                    <div class="card border-warning mb-3">
+                        <div class="card-body text-dark">
+                            <h5 class="card-title">Primeira sigla</h5>
+                            <div class="align-content-end" style="text-align: end; margin-right: 1em;">
+                                <p style="font-size: 2em;" th:text="${valores.primeiraSiglaCadastrada.sigla}"></p>
+                                <span class="badge text-bg-secondary" th:text="${#temporals.format(valores.primeiraSiglaCadastrada.timestamp, 'dd/MM/yyyy')}"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div v-if="isAuthenticated">
-
-        <div v-if="!loading" class="input-group mt-3">
-            <button v-on:click="setMedicationToCreate" class="btn btn-outline-primary" type="button" id="button-create" data-bs-toggle="modal" href="#modalCreateMedication" role="button">Adicionar Medicação</button>
-            <input v-model="search" type="text" class="form-control" placeholder="Buscar medicação..." aria-label="Medicação para buscar" aria-describedby="Botão para buscar medicação">
-            <button v-on:click="performSearchMedication" class="btn btn-outline-secondary" type="button" id="button-search">Buscar</button>
-        </div>
-        <div v-if="!loading" class="card mt-2">
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6 text-start"><button v-on:click="recoverMedications" type="button" class="btn btn-sm btn-outline-info"><i class="fas fa-sync"></i> Recarregar</button></div>
-                    <div class="col-6 text-end"><button v-on:click="performLogout" type="button" class="btn btn-sm btn-outline-dark"><i class="fas fa-door-open"></i> Sair</button></div>
-                </div>
-            </div>
-        </div>
-        <div v-if="!loading" class="card mt-2">
-            <table class="table table-hover pl-2 pr-2 pt-2 pb-2">
-                <thead>
-                <tr>
-                    <th></th>
-                    <th>Nome</th>
-                    <th>Estoque</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr v-for="medication in medications">
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Ações a serem tomadas para cada medicação">
-                            <button v-on:click="selectMedication(medication)" type="button" class="btn btn-outline-info" data-bs-toggle="modal" href="#modalDetailsMedication" role="button"><i class="fas fa-info-circle"></i></button>
-                            <button v-on:click="selectMedication(medication)" type="button" class="btn btn-outline-warning" data-bs-toggle="modal" href="#modalEditMedication" role="button"><i class="fas fa-pen"></i></button>
-                            <button v-on:click="selectMedication(medication)" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" href="#modalRemoveMedication" role="button"><i class="fas fa-trash"></i></i></button>
-                        </div>
-                    </td>
-                    <td><div class="mt-2 mb-2">{{medication.commercialName}}</div></td>
-                    <td><div class="mt-2 mb-2">{{medication.stock}}</div></td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div v-if="loading" class="d-flex justify-content-center mt-3">
-            <div class="spinner-grow" style="width: 5rem; height: 5rem;" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modalCreateMedication" ref="modalCreateMedication" aria-hidden="true" aria-labelledby="modalCreateMedication" tabindex="-1">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Adicionar nova medicação</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6">
-                                <label for="commercialName" class="form-label">Nome comercial</label>
-                                <input v-model="medication.commercialName" type="text" class="form-control" id="commercialName" placeholder="Nome da medicação">
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="function" class="form-label">Função</label>
-                                <textarea v-model="medication.function" class="form-control" id="function" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="actionMechanism" class="form-label">Mecanismo de ação</label>
-                                <textarea v-model="medication.actionMechanism" class="form-control" id="actionMechanism" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="recommendation" class="form-label">Indicado para</label>
-                                <textarea v-model="medication.recommendation" class="form-control" id="recommendation" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="againstIndication" class="form-label">Contra indicações</label>
-                                <textarea v-model="medication.againstIndication" class="form-control" id="againstIndication" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="reference" class="form-label">Referências</label>
-                                <textarea v-model="medication.reference" class="form-control" id="reference" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="status" class="form-label">Status</label>
-                                <select v-model="medication.status" class="form-select" id="status" aria-label="Selecionar status da medicação">
-                                    <option selected>Selecione o status desta medicação</option>
-                                    <option value="IN_STOCK">Em estoque</option>
-                                    <option value="OUT_STOCK">Sem estoque</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="stock" class="form-label">Estoque</label>
-                                <input v-model="medication.stock" type="number" min="0" class="form-control" id="stock" value="0" placeholder="55">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button v-if="!loadingMedicationCreation" v-on:click="performSaveMedication()" class="btn btn-success">Adicionar nova medicação</button>
-                        <button v-if="loadingMedicationCreation" class="btn btn-primary" type="button" disabled>
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            Registrando...
-                        </button>
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modalEditMedication" aria-hidden="true" aria-labelledby="modalEditMedication" tabindex="-1">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Alterar medicação</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-6">
-                                <label for="commercialName" class="form-label">Nome comercial</label>
-                                <input v-model="medication.commercialName" type="text" class="form-control" placeholder="Nome da medicação">
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="function" class="form-label">Função</label>
-                                <textarea v-model="medication.function" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="actionMechanism" class="form-label">Mecanismo de ação</label>
-                                <textarea v-model="medication.actionMechanism" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="recommendation" class="form-label">Indicado para</label>
-                                <textarea v-model="medication.recommendation" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="againstIndication" class="form-label">Contra indicações</label>
-                                <textarea v-model="medication.againstIndication" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="reference" class="form-label">Referências</label>
-                                <textarea v-model="medication.reference" class="form-control" rows="3"></textarea>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="status" class="form-label">Status</label>
-                                <select v-model="medication.status" class="form-select" aria-label="Selecionar status da medicação">
-                                    <option selected>Selecione o status desta medicação</option>
-                                    <option value="IN_STOCK">Em estoque</option>
-                                    <option value="OUT_STOCK">Sem estoque</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-12 col-md-6">
-                                <label for="stock" class="form-label">Estoque</label>
-                                <input v-model="medication.stock" type="number" min="0" class="form-control" value="0" placeholder="55">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button v-if="!loadingMedicationCreation" v-on:click="performSaveMedication" class="btn btn-success" data-bs-dismiss="modal">Salvar mudanças</button>
-                        <button v-if="loadingMedicationCreation" class="btn btn-primary" type="button" disabled>
-                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                            Registrando...
-                        </button>
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modalDetailsMedication" aria-hidden="true" aria-labelledby="modalDetailsMedication" tabindex="-1">
-            <div class="modal-dialog modal-xl modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Detalhes da medicação</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="h2 text-center">{{ medication.commercialName }}</p>
-                        <hr />
-                        <div class="accordion" id="accordionExample">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                        Função
-                                    </button>
-                                </h2>
-                                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        {{medication.function}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                        Mecanismo de ação
-                                    </button>
-                                </h2>
-                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        {{medication.actionMechanism}}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingThree">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                        Recomendações
-                                    </button>
-                                </h2>
-                                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        {{medication.recommendation}}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingContraIndicacao">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contraIndicacao" aria-expanded="false" aria-controls="contraIndicacao">
-                                        Contra Indicações
-                                    </button>
-                                </h2>
-                                <div id="contraIndicacao" class="accordion-collapse collapse" aria-labelledby="contraIndicacao" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        {{medication.againstIndication}}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="headingReferencias">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#referencias" aria-expanded="false" aria-controls="contraIndicacao">
-                                        Referências
-                                    </button>
-                                </h2>
-                                <div id="referencias" class="accordion-collapse collapse" aria-labelledby="referencias" data-bs-parent="#accordionExample">
-                                    <div class="accordion-body">
-                                        {{medication.reference}}
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Ok</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="modal fade" id="modalRemoveMedication" aria-hidden="true" aria-labelledby="modalRemoveMedication" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">AVISO</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="text-center">Confirma a remoção da medicação {{ medication.commercialName }}?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button class="btn btn-danger" v-on:click="removeMedication(medication.id)" data-bs-dismiss="modal">Sim</button>
-                        <button class="btn btn-secondary" data-bs-dismiss="modal">Não</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="snackbar" style="z-index: 10000">{{ snackbarMsg }}</div>
+    <br />
 </div>
-
-<script src="webjars/bootstrap/5.0.0-beta3/js/bootstrap.min.js"></script>
-<script src="webjars/vue/2.6.12/vue.min.js"></script>
-<script src="webjars/axios/0.21.1/dist/axios.min.js"></script>
-<script src="../js/lulu.js"></script>
+<div th:replace="~{fragments/_base :: modalInfo}"></div>
+<div th:replace="~{fragments/_base :: scripts}"></div>
 </body>
 </html>
