@@ -40,7 +40,7 @@ public class SiglaRelatorioUsecase {
         return sigla;
     }
 
-    @Cacheable("autorQueMaisCadastrouSiglas")
+    @Cacheable(value = "autorQueMaisCadastrouSiglas")
     public AutorDto autorQueMaisCadastrouSiglas(){
         SiglasPorAutor siglasPorAutor = this.siglaAdapter.recuperarAutorQueMaisCriouSiglas();
         AutorDto autorDto = new AutorDto();
